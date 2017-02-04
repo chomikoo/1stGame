@@ -11,7 +11,7 @@ var newGameBtn = document.getElementById('js-newGameButton'), //New game button
 //	newGameBtn = document.getElementById('js-newGameButton'),
     
 	newGameElem = document.getElementById('js-newGameElement'), //div z przyciskiem noewj gry
-	pickElem = document.getElementById('js-playerPickElement'), // wybór gracza 
+	pickElem = document.getElementById('js-playerPickElement'), // wybór gracza  wiersz
 	resultsElem = document.getElementById('js-resultsTableElement'), //tabela wynikow
 //rozp. gry
 	playerPointsElem = document.getElementById('js-playerPoints'),// pkt gracza
@@ -21,7 +21,7 @@ var newGameBtn = document.getElementById('js-newGameButton'), //New game button
 	computerPickElem = document.getElementById('js-computerPick'),//wybor komputera
 	playerResultElem = document.getElementById('js-playerResult'),//wynik gracza
 	computerResultElem = document.getElementById('js-computerResult'),//wynik komputera
-
+	displayWinner = document.getElementById('js-displayWinner'),
 //Wartosci poczatkowe
     gameState = 'notStarted', // stan gry - started,/ended
     player = {
@@ -54,7 +54,7 @@ function setGameElements() {
 		case 'notStarted':
 		default:
 			newGameElem.style.display = 'block';
-			pickElem.style.dispaly = 'none';
+			pickElem.style.display = 'none';
 			resultsElem.style.display = 'none'; 
 	}
 }
@@ -98,9 +98,9 @@ function checkRoundWinner(playerPick, computerPick) {
             winnerIs == 'noone'; // Remis
         }
         else if (
-            (computerPick == 'Rock' && playerPick == 'Scissors') ||
-            (computerPick == 'Scissors' && playerPick == 'Paper') ||
-            (computerPick == 'Paper' && playerPick == 'Rock')) {
+            (computerPick == 'Rock' 	&& playerPick == 'Scissors') 	||
+            (computerPick == 'Scissors' && playerPick == 'Paper') 		||
+            (computerPick == 'Paper' 	&& playerPick == 'Rock')) {
             
             winnerIs = 'computer';
         }
@@ -117,18 +117,25 @@ function checkRoundWinner(playerPick, computerPick) {
         }
     
         if (player.score == '10') {
-            alert(player.name + ' win!!' +  " 10 points !!! Congrats:D");
+            displayWinner.innerHTML = player.name + " win!! 10 points !!! Congrats!";
             gameState = 'ended';
             setGameElements();
         }
         else if (computer.score == '10') {
-            alert('Unfortunately you lose. Try again! ');
+            displayWinner.innerHTML = 'Unfortunately you lose. Try again! ';
             gameState == 'ended';
             setGameElements();
-            
         }
+        resetP();  //--resetowanie punktów
 }
 function setGamePoints() {
     playerPointsElem.innerHTML = player.score;
     computerPickElem.innerHTML = computer.score;
+}
+
+function resetP() {
+	if(gameState == 'ended'){
+		playerPointsElem.innerHTML == 0;
+		computerPointsElem.innerHTML == 0;
+	}
 }
